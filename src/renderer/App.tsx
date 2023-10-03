@@ -34,26 +34,28 @@ function App() {
 
   useEffect(() => {
     // NOTE: Ask for user settings from the main process onMount.
-    window.ipc.send('load-settings');
+    if (window.ipc) {
+      window.ipc.send('load-settings');
 
-    // NOTE: Handle load-settings event from the main process.
-    // NOTE: Info is passed from userData (themeName + numOfFilesToLoad)
-    window.ipc.on('load-settings', (payload: any) => {
-      dispatch(setThemeName(payload.themeName));
-      dispatch(setNumOfFilesToLoad(payload.numOfFilesToLoad));
-    });
+      // NOTE: Handle load-settings event from the main process.
+      // NOTE: Info is passed from userData (themeName + numOfFilesToLoad)
+      window.ipc.on('load-settings', (payload: any) => {
+        dispatch(setThemeName(payload.themeName));
+        dispatch(setNumOfFilesToLoad(payload.numOfFilesToLoad));
+      });
 
-    // NOTE: Create ipc event handler for handling directory changes.
-    window.ipc.on('open-directory', (payload: IFolder) => {
-      dispatch(setFolder(payload));
-      dispatch(setFolderIsLoading(false));
-    });
+      // NOTE: Create ipc event handler for handling directory changes.
+      window.ipc.on('open-directory', (payload: IFolder) => {
+        dispatch(setFolder(payload));
+        dispatch(setFolderIsLoading(false));
+      });
 
-    // NOTE Remove event listeners on unMount to prevent infinite listeners.
-    return () => {
-      window.ipc.removeAllListeners('get-settings');
-      window.ipc.removeAllListeners('open-directory');
-    };
+      // NOTE Remove event listeners on unMount to prevent infinite listeners.
+      return () => {
+        window.ipc.removeAllListeners('get-settings');
+        window.ipc.removeAllListeners('open-directory');
+      };
+    }
 
     // eslint-disable-next-line
   }, []);

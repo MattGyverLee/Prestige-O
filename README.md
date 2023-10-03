@@ -69,3 +69,13 @@ npm run electron-pack
 ## Licensing
 
 While Orbital is open-source, I ask that you do not re-distribute it.
+
+Fixing babel--traverse 
+npm install @types/babel__traverse@7.17.1
+https://github.com/DefinitelyTyped/DefinitelyTyped/issues/65766
+
+Node17 has different SSL settings
+https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported
+
+Node.js cannot use import statement outside a module
+https://stackoverflow.com/questions/58384179/syntaxerror-cannot-use-import-statement-outside-a-module
